@@ -1,11 +1,8 @@
-package ui;
+package offline;
 
 /**
  * Created by ray on 2017/1/18.
  */
-
-import model.GS_Game;
-import model.GS_GameDoublePlayer;
 
 import javax.swing.*;
 import java.awt.*;

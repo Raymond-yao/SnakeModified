@@ -1,4 +1,8 @@
-package model;
+package offline;
+
+import Models.Food;
+import Models.Snake;
+import Models.SpecialFood;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -51,7 +55,6 @@ public class GS_GameDoublePlayer {
         hasFood = false;
         createFood();
         isOver = false;
-       // System.out.print("setup finish");
     }
 
     public void update() {

@@ -1,29 +1,28 @@
-package ui;
+package offline;
 
-import model.Food;
-import model.GS_Game;
-import model.Snake;
-import model.SpecialFood;
+import Models.Food;
+import offline.GS_GameSinglePlayer;
+import Models.Snake;
+import Models.SpecialFood;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Collection;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by ray on 2017/1/18.
  */
-public class GamePanel extends JPanel {
+public class GamePanelSinglePlayer extends JPanel {
 
     private static final String OVER = "Game Over!";
     private static final String REPLAY = "R to replay";
 
-    private GS_Game game;
+    private GS_GameSinglePlayer game;
     private Color foodColor;
 
 
-    public GamePanel(GS_Game game) {
-        setPreferredSize(new Dimension(GS_Game.WIDTH, GS_Game.HEIGHT));
+    public GamePanelSinglePlayer(GS_GameSinglePlayer game) {
+        setPreferredSize(new Dimension(GS_GameSinglePlayer.WIDTH, GS_GameSinglePlayer.HEIGHT));
         setBackground(Color.GRAY);
         this.game = game;
 
@@ -78,14 +77,14 @@ public class GamePanel extends JPanel {
         g.setColor(new Color(0, 0, 0));
         g.setFont(new Font("Arial", 20, 20));
         FontMetrics fm = g.getFontMetrics();
-        centreString(OVER, g, fm, GS_Game.HEIGHT / 2);
-        centreString(REPLAY, g, fm, GS_Game.HEIGHT / 2 + 50);
+        centreString(OVER, g, fm, GS_GameSinglePlayer.HEIGHT / 2);
+        centreString(REPLAY, g, fm, GS_GameSinglePlayer.HEIGHT / 2 + 50);
         g.setColor(saved);
     }
 
     private void centreString(String str, Graphics g, FontMetrics fm, int yPos) {
         int width = fm.stringWidth(str);
-        g.drawString(str, (GS_Game.WIDTH - width) / 2, yPos);
+        g.drawString(str, (GS_GameSinglePlayer.WIDTH - width) / 2, yPos);
     }
 
 

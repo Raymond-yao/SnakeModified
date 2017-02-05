@@ -1,6 +1,9 @@
-package ui;
+package offline;
 
-import model.*;
+import Models.Food;
+import Models.Snake;
+import Models.SpecialFood;
+import offline.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +22,7 @@ public class GamePanelDoublePlayer extends JPanel {
 
 
     public GamePanelDoublePlayer(GS_GameDoublePlayer game) {
-        setPreferredSize(new Dimension(GS_Game.WIDTH, GS_Game.HEIGHT));
+        setPreferredSize(new Dimension(GS_GameSinglePlayer.WIDTH, GS_GameSinglePlayer.HEIGHT));
         setBackground(Color.GRAY);
         this.game = game;
 
@@ -80,14 +83,14 @@ public class GamePanelDoublePlayer extends JPanel {
         g.setColor(new Color(0, 0, 0));
         g.setFont(new Font("Arial", 20, 20));
         FontMetrics fm = g.getFontMetrics();
-        centreString(OVER, g, fm, GS_Game.HEIGHT / 2);
-        centreString(REPLAY, g, fm, GS_Game.HEIGHT / 2 + 50);
+        centreString(OVER, g, fm, GS_GameSinglePlayer.HEIGHT / 2);
+        centreString(REPLAY, g, fm, GS_GameSinglePlayer.HEIGHT / 2 + 50);
         g.setColor(saved);
     }
 
     private void centreString(String str, Graphics g, FontMetrics fm, int yPos) {
         int width = fm.stringWidth(str);
-        g.drawString(str, (GS_Game.WIDTH - width) / 2, yPos);
+        g.drawString(str, (GS_GameSinglePlayer.WIDTH - width) / 2, yPos);
     }
 
 

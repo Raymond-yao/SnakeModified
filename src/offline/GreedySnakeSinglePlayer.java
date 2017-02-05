@@ -1,10 +1,8 @@
-package ui;
+package offline;
 
 /**
  * Created by ray on 2017/1/18.
  */
-
-import model.GS_Game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,18 +17,18 @@ import javax.swing.Timer;
 /**
  * Created by ray on 2016/9/18.
  */
-public class GreedySnake extends JFrame {
+public class GreedySnakeSinglePlayer extends JFrame {
     private static final int INTERVAL = 150;
-    private GS_Game game;
-    private GamePanel gp;
+    private GS_GameSinglePlayer game;
+    private GamePanelSinglePlayer gp;
 
 
-    public GreedySnake() {
+    public GreedySnakeSinglePlayer() {
         super("Greedy Snake");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
-        game = new GS_Game();
-        gp = new GamePanel(game);
+        game = new GS_GameSinglePlayer();
+        gp = new GamePanelSinglePlayer(game);
         add(gp);
         addKeyListener(new KeyHandler());
         pack();
@@ -68,7 +66,7 @@ public class GreedySnake extends JFrame {
 
     // Play the game
     public static void main(String[] args) {
-        new GreedySnake();
+        new GreedySnakeSinglePlayer();
     }
 }
 

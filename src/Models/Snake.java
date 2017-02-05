@@ -1,4 +1,4 @@
-package model;
+package Models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +64,24 @@ public class Snake {
     }
 
     public void setFacing(String facing) {
-        this.facing = facing;
+        switch (facing) {
+            case "up":
+                if (!this.facing.equals("up") && !this.facing.equals("down"))
+                    this.facing = facing;
+                break;
+            case "down":
+                if (!this.facing.equals("up") && !this.facing.equals("down"))
+                    this.facing = facing;
+                break;
+            case "right":
+                if (!this.facing.equals("right")  && !this.facing.equals("left"))
+                    this.facing = facing;
+                break;
+            case "left":
+                if (!this.facing.equals("right")  && !this.facing.equals("left"))
+                    this.facing = facing;
+                break;
+        }
     }
 
     public void move() {
@@ -96,10 +113,10 @@ public class Snake {
     }
 
 
-    class Body {
+    public class Body {
 
-        int x;
-        int y;
+        public int x;
+        public int y;
 
         public Body(int x, int y) {
             this.x = x;

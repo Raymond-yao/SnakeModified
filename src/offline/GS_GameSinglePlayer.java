@@ -1,4 +1,8 @@
-package model;
+package offline;
+
+import Models.Food;
+import Models.Snake;
+import Models.SpecialFood;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -7,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by ray on 2017/1/18.
  */
-public class GS_Game {
+public class GS_GameSinglePlayer {
 
     public static final int COLUMNS = 26;
     public static final int ROWS = 26;
@@ -20,7 +24,7 @@ public class GS_Game {
     private boolean hasFood;
     private boolean hasSpecialFood = false;
 
-    public GS_Game() {
+    public GS_GameSinglePlayer() {
         setup();
     }
 
@@ -45,7 +49,6 @@ public class GS_Game {
         hasFood = false;
         createFood();
         isOver = false;
-        System.out.print("setup finish");
     }
 
     public void update() {
