@@ -1,6 +1,7 @@
 package online_local.client;
 
 import Models.Snake;
+import Models.SpecialFood;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,11 +28,11 @@ public class Client {
     BufferedReader in;
     private int height;
     private int width;
-
+    public boolean hasSpecialFood;
 
     // Render data for anime
     public Pair food;
-    public Map.Entry specialFood;
+    public SpecialFood specialFood;
     public Integer decay;
     public List<Pair> pairlist1 = new LinkedList<>();
     public List<Pair> pairlist2 = new LinkedList<>();
@@ -44,6 +45,7 @@ public class Client {
             socket = new Socket(ip, port);
             this.out = new PrintWriter(socket.getOutputStream(),true);
             gsClient = new GS_Client(this, new Dimension(780, 780));
+            hasSpecialFood = false;
             new Renderer().start();
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,6 +68,9 @@ public class Client {
             snake1 = render.getJSONArray("Snake1");
             snake2 = render.getJSONArray("Snake2");
             food = new Pair(render.getInt("FOOD_x"), render.getInt("FOOD_y"));
+            hasSpecialFood = render.getBoolean("hasSpecial");
+            if (hasSpecialFood)
+                specialFood = new SpecialFood(render.getInt("SF_x"),render.getInt("SF_y"),render.getInt("SF_d"));
             switch (number_assigned) {
                 case 1:
                     direction = render.getString("Snake1Dir");

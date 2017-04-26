@@ -20,7 +20,15 @@ public class SpecialFood extends Food {
         green = 36;
         blue = 241;
         decayColor = new Color(red, green, blue);
-        new Color(242,36,241);
+    }
+
+    public SpecialFood(int x, int y, int decay){
+        this.x = x;
+        this.y = y;
+        red = 242;
+        green = 36;
+        blue = 241;
+        decayColor = new Color(red, green + (decay * 10), blue - (decay * 10));
     }
 
     public void decay() {

@@ -9,8 +9,8 @@ public class Food {
 
 
     public static final int FOOD_SIZE = 30;
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
 
     public int getX() {
         return x;

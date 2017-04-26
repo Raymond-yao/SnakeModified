@@ -1,4 +1,5 @@
 package online_local.server;
+
 import Models.Snake;
 import Models.Food;
 import Models.SpecialFood;
@@ -155,9 +156,12 @@ public class GS_Game_online {
             render.put("Snake2Dir", this.snake2.getFacing());
             render.put("FOOD_x", food.getX());
             render.put("FOOD_y", food.getY());
-            //render.put("SF_x", specialFood.getX());
-            //render.put("SF_y", specialFood.getY());
-            //render.put("SF_d", specialFood.decay);
+            render.put("hasSpecial", hasSpecialFood);
+            if (hasSpecialFood) {
+                render.put("SF_x", specialFood.getX());
+                render.put("SF_y", specialFood.getY());
+                render.put("SF_d", specialFood.decay);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -216,7 +220,7 @@ public class GS_Game_online {
 
         for (int i = 0; i < 2; i++) {
             Snake.Body head = snakes[i].getHead();
-            if (head.x >= COLUMNS+1  || head.y >= ROWS +1 || head.x <= -1 || head.y <= -1) {
+            if (head.x >= COLUMNS + 1 || head.y >= ROWS + 1 || head.x <= -1 || head.y <= -1) {
                 isOver = true;
                 return;
             }
@@ -298,7 +302,6 @@ public class GS_Game_online {
                             snake2_facing = dir;
                             break;
                     }
-                    System.out.println("set new directions");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

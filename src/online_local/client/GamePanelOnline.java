@@ -1,5 +1,8 @@
 package online_local.client;
 
+import Models.Food;
+import Models.SpecialFood;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -34,6 +37,13 @@ public class GamePanelOnline extends JPanel  {
         Color foodColor = new Color(237, 237, 58);
         g.setColor(foodColor);
         g.fillOval(client.food.getX() * FOOD_SIZE, client.food.getY() * FOOD_SIZE, FOOD_SIZE, FOOD_SIZE);
+
+        if (client.hasSpecialFood){
+            SpecialFood temp = client.specialFood;
+            Color specialColor = temp.decayColor;
+            g.setColor(specialColor);
+            g.fillRect(temp.getX() * Food.FOOD_SIZE, temp.getY() * Food.FOOD_SIZE, Food.FOOD_SIZE, Food.FOOD_SIZE);
+        }
     }
 
     private void drawSnake(Graphics g) {
