@@ -11,20 +11,11 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by ray on 2017/1/18.
  */
-public class GS_GameDoublePlayer {
+public class GS_GameDoublePlayer extends GS_Game{
 
-    public static final int COLUMNS = 26;
-    public static final int ROWS = 26;
-    public static final int HEIGHT = COLUMNS * Snake.BODY_SIZE;
-    public static final int WIDTH = ROWS * Snake.BODY_SIZE;
     private Snake snake1;
     private Snake snake2;
     private Snake[] snakes;
-    private Food food;
-    private SpecialFood specialFood;
-    private boolean isOver;
-    private boolean hasFood;
-    private boolean hasSpecialFood = false;
 
     public GS_GameDoublePlayer() {
         setup();
@@ -34,19 +25,8 @@ public class GS_GameDoublePlayer {
         return snakes;
     }
 
-    public Food getFood() {
-        return food;
-    }
-
-    public SpecialFood getSpecialFood() {
-        return specialFood;
-    }
-
-    public boolean isOver() {
-        return isOver;
-    }
-
-    private void setup() {
+    @Override
+    protected void setup() {
         snake1 = new Snake(4,5);
         snake2 = new Snake(4,15);
         snakes = new Snake[2];
@@ -69,17 +49,9 @@ public class GS_GameDoublePlayer {
         decaySpecialFood();
     }
 
-    private void decaySpecialFood() {
-        if (specialFood != null) {
-            specialFood.decay();
-            if (specialFood.decay <= 0) {
-                specialFood = null;
-                hasSpecialFood = false;
-            }
-        }
-    }
 
-    private void createSpecialFood() {
+
+    protected void createSpecialFood() {
         if (!hasSpecialFood) {
             int probability = ThreadLocalRandom.current().nextInt(0, 100 + 1);
             if (probability == 2) {
@@ -90,18 +62,18 @@ public class GS_GameDoublePlayer {
             }
         }
     }
-
-    private void createFood() {
+    @Override
+    protected void createFood() {
         if (!hasFood) {
             food = new Food();
-            while (food.eaten(snake1.getHead().x, snake1.getHead().y)) {
+            while (food.eaten(snake1.getHead().x, snake1.getHead().y) || food.eaten(snake2.getHead().x,snake2.getHead().y)) {
                 food = new Food();
             }
             hasFood = true;
         }
     }
 
-    private void checkCollision(Snake s) {
+    protected void checkCollision(Snake s) {
         List<Snake.Body> longBody1 = snake1.getBodyList();
         List<Snake.Body> longBody2 = snake2.getBodyList();
         Snake.Body head = s.getHead();
@@ -165,18 +137,5 @@ public class GS_GameDoublePlayer {
 
     }
 
-    private void checkEat(Snake s) {
-        if (food.eaten(s.getHead().x, s.getHead().y)) {
-            hasFood = false;
-            snake1.grow();
-        }
-        if (specialFood != null && specialFood.eaten(s.getHead().x, s.getHead().y)) {
-            hasSpecialFood = false;
-            if (specialFood.decay > 3) {
-                snake1.grow();
-                snake1.grow();
-            }
-            specialFood = null;
-        }
-    }
+
 }

@@ -33,7 +33,6 @@ public class GS_Game_online {
 
     // An array storing the players.
     private Socket[] players;
-    private PrintWriter nextinfo;
 
 
     private Snake snake1;
@@ -84,7 +83,7 @@ public class GS_Game_online {
         System.out.print("setup finish");
     }
 
-    public void update() {
+    private void update() {
 
         JSONObject renderData;
 
@@ -97,7 +96,6 @@ public class GS_Game_online {
             while (!isOver) {
 
                 renderData = writeJsonFile();
-                System.out.println(renderData.toString());
                 broadcast(renderData.toString());
 
                 snake1.setFacing(snake1_facing);
@@ -109,7 +107,6 @@ public class GS_Game_online {
                 createFood();
                 decaySpecialFood();
                 sleep(300);
-                System.out.println("Finish a loop");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,6 +114,8 @@ public class GS_Game_online {
     }
 
     private void broadcast(String msg) {
+
+        PrintWriter nextinfo;
 
         for (Socket s : players) {
             nextinfo = sendPlayerInfo(s);
@@ -170,7 +169,7 @@ public class GS_Game_online {
 
         OutputStreamWriter out;
         BufferedWriter bfout;
-        PrintWriter pw = null;
+        PrintWriter pw;
 
         try {
             out = new OutputStreamWriter(s.getOutputStream());
@@ -217,7 +216,7 @@ public class GS_Game_online {
 
         for (int i = 0; i < 2; i++) {
             Snake.Body head = snakes[i].getHead();
-            if (head.x >= COLUMNS  || head.y >= ROWS  || head.x <= 0 || head.y <= 0) {
+            if (head.x >= COLUMNS+1  || head.y >= ROWS +1 || head.x <= -1 || head.y <= -1) {
                 isOver = true;
                 return;
             }
@@ -249,15 +248,15 @@ public class GS_Game_online {
             if (specialFood != null && checkEaten(snakes[i], specialFood)) {
                 hasSpecialFood = false;
                 if (specialFood.decay > 3) {
-                    snake1.grow();
-                    snake1.grow();
+                    snakes[i].grow();
+                    snakes[i].grow();
                 }
                 specialFood = null;
             }
         }
     }
 
-    class PlayerListener extends Thread {
+    private class PlayerListener extends Thread {
 
         private BufferedReader playerinfo;
         Socket player;
@@ -287,7 +286,6 @@ public class GS_Game_online {
         @Override
         public void run() {
             playerinfo = getPlayerInfo(player);
-            System.out.println("obtain players port complete");
             if (playerinfo == null)
                 return;
             try {

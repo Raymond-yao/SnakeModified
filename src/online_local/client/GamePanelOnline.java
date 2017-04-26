@@ -50,7 +50,6 @@ public class GamePanelOnline extends JPanel  {
             snakecolor = new Color(red, green, blue);
             g.setColor(snakecolor);
             g.fillRect(client.pairlist1.get(i).getX() * BODY_SIZE, client.pairlist1.get(i).getY() * BODY_SIZE, BODY_SIZE, BODY_SIZE);
-
         }
         for (int i = 0; i < client.pairlist2.size(); i++) {
             red = ThreadLocalRandom.current().nextInt(0, 255 + 1);
@@ -59,11 +58,6 @@ public class GamePanelOnline extends JPanel  {
             snakecolor = new Color(red, green, blue);
             g.setColor(snakecolor);
             g.fillRect(client.pairlist2.get(i).getX() * BODY_SIZE, client.pairlist2.get(i).getY() * BODY_SIZE, BODY_SIZE, BODY_SIZE);
-
         }
-        System.out.println("draw snake complete");
-
     }
-
-
 }

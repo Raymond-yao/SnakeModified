@@ -19,8 +19,8 @@ import javax.swing.Timer;
  */
 public class GreedySnakeSinglePlayer extends JFrame {
     private static final int INTERVAL = 150;
-    private GS_GameSinglePlayer game;
-    private GamePanelSinglePlayer gp;
+    private GS_Game game;
+    private GamePanel gp;
 
 
     public GreedySnakeSinglePlayer() {

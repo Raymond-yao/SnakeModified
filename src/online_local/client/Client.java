@@ -30,7 +30,6 @@ public class Client {
 
 
     // Render data for anime
-    public String renderData;
     public Pair food;
     public Map.Entry specialFood;
     public Integer decay;
@@ -40,9 +39,9 @@ public class Client {
     public String direction;
     private GS_Client gsClient;
 
-    public Client() {
+    public Client(String ip,int port) {
         try {
-            socket = new Socket("localhost", 12345);
+            socket = new Socket(ip, port);
             this.out = new PrintWriter(socket.getOutputStream(),true);
             gsClient = new GS_Client(this, new Dimension(780, 780));
             new Renderer().start();
@@ -66,7 +65,7 @@ public class Client {
             render = new JSONObject(data);
             snake1 = render.getJSONArray("Snake1");
             snake2 = render.getJSONArray("Snake2");
-            food = new Pair(render.getInt("FOOD_x"), render.getInt("FOOD_x"));
+            food = new Pair(render.getInt("FOOD_x"), render.getInt("FOOD_y"));
             switch (number_assigned) {
                 case 1:
                     direction = render.getString("Snake1Dir");
@@ -79,7 +78,6 @@ public class Client {
             }
             pairlist1.clear();
             pairlist2.clear();
-            //decay = (Integer) Integer.parseInt(render.getInt("SF_d"));
             for (int i = 0; i < snake1.length(); i++) {
                 JSONObject cell = snake1.getJSONObject(i);
                 Pair pair = new Pair(cell.getInt("coor_x"), cell.getInt("coor_y"));
@@ -117,18 +115,14 @@ public class Client {
                     if (inword.matches("(.+);(.+)")) {
                         height = Integer.parseInt(inword.split(";")[0]);
                         width = Integer.parseInt(inword.split(";")[1]);
-                        System.out.println(height + "," + width);
                         gsClient.setVisible(true);
                     } else {
                         parseData(inword);
-                        System.out.println(inword);
                         gsClient.repaint();
-                        System.out.println("finish paint");
                     }
 
 
                 }
-                System.out.println("out of the loop");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -137,7 +131,7 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        new Client();
+        new Client("localhost",12345);
 
     }
 }

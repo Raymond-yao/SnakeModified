@@ -23,10 +23,10 @@ public class Server {
     List<Socket> users = new LinkedList<Socket>();
     Socket socket;
 
-    public Server() {
+    public Server(int port) {
         try {
             sockets = new Socket[2];
-            serverSocket = new ServerSocket(12345);
+            serverSocket = new ServerSocket(port);
             while (true) {
                 socket = serverSocket.accept();
                 if (!users.contains(socket))
@@ -48,7 +48,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        new Server();
+        new Server(12345);
     }
 
 }

@@ -9,22 +9,16 @@ import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Created by ray on 2017/1/18.
+ * Created by ray on 2017/3/24.
  */
-public class GamePanelDoublePlayer extends JPanel {
-
+public class GamePanel extends JPanel {
     private static final String OVER = "Game Over!";
     private static final String REPLAY = "R to replay";
-
-    private GS_GameDoublePlayer game;
+    protected GS_Game game;
     private Color foodColor;
 
-
-    public GamePanelDoublePlayer(GS_GameDoublePlayer game) {
-        setPreferredSize(new Dimension(GS_Game.WIDTH, GS_Game.HEIGHT));
-        setBackground(Color.GRAY);
-        this.game =  game;
-
+    public GamePanel(GS_Game game) {
+        this.game = game;
     }
 
     @Override
@@ -35,14 +29,8 @@ public class GamePanelDoublePlayer extends JPanel {
     }
 
     private void drawGame(Graphics g) {
-        drawSnakes(g);
+        drawSnake(g);
         drawFood(g);
-    }
-
-    private void drawSnakes(Graphics g) {
-        Snake[] snakes = game.getSnakes();
-        drawSnake(g, snakes[0]);
-        drawSnake(g, snakes[1]);
     }
 
     private void drawFood(Graphics g) {
@@ -58,8 +46,8 @@ public class GamePanelDoublePlayer extends JPanel {
         }
     }
 
-    private void drawSnake(Graphics g, Snake s) {
-        Snake snake = s;
+    private void drawSnake(Graphics g) {
+        Snake snake = game.getSnake();
         int red;
         int green;
         int blue;
@@ -91,6 +79,4 @@ public class GamePanelDoublePlayer extends JPanel {
         int width = fm.stringWidth(str);
         g.drawString(str, (GS_Game.WIDTH - width) / 2, yPos);
     }
-
-
 }
