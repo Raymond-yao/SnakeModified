@@ -30,6 +30,7 @@ public class Server {
             while (true) {
                 socket = serverSocket.accept();
                 if (!users.contains(socket))
+                    System.out.print("found");
                     users.add(socket);
                 if (users.size() == 2){
                     PrintWriter out = new PrintWriter(new OutputStreamWriter(users.get(0).getOutputStream()));
@@ -39,8 +40,11 @@ public class Server {
                     sockets [0] = users.get(0);
                     sockets [1] = users.get(1);
                 }
-                if (sockets[0] != null && sockets[1] != null)
+                if (sockets[0] != null && sockets[1] != null) {
                     new GS_Game_online(sockets);
+                    sockets[0] = sockets[1] = null;
+                    users.clear();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

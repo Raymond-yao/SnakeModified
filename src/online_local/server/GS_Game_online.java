@@ -43,15 +43,16 @@ public class GS_Game_online {
     private Snake[] snakes; // just for convience of loop operation;
     private Food food;
     private SpecialFood specialFood;
+    private Thread playerListener1;
+    private Thread playerListener2;
 
 
     public GS_Game_online(Socket[] players) {
         this.players = players;
         setup();
-        new PlayerListener(players[0], 1).start();
-        new PlayerListener(players[1], 2).start();
+        (playerListener1 = new PlayerListener(players[0], 1)).start();
+        (playerListener2 = new PlayerListener(players[1], 2)).start();
         update();
-        gameOver();
     }
 
     public Snake getSnake1() {
@@ -109,6 +110,8 @@ public class GS_Game_online {
                 decaySpecialFood();
                 sleep(300);
             }
+
+            gameOver();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,6 +131,9 @@ public class GS_Game_online {
 
     // Inform all the players if the game is over
     private void gameOver() {
+        broadcast("Game Over!");
+        playerListener1.interrupt();
+        playerListener2.interrupt();
     }
 
     private JSONObject writeJsonFile() {
@@ -263,8 +269,7 @@ public class GS_Game_online {
     private class PlayerListener extends Thread {
 
         private BufferedReader playerinfo;
-        Socket player;
-        String dir;
+        private Socket player;
         int player_num;
 
         public PlayerListener(Socket socket, int num) {
@@ -293,7 +298,12 @@ public class GS_Game_online {
             if (playerinfo == null)
                 return;
             try {
+                String dir = null;
                 while ((dir = playerinfo.readLine()) != null) {
+                    if (Thread.interrupted()) {
+                        this.player.close();
+                        return;
+                    }
                     switch (player_num) {
                         case 1:
                             snake1_facing = dir;

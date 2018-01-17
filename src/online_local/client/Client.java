@@ -47,6 +47,7 @@ public class Client {
             gsClient = new GS_Client(this, new Dimension(780, 780));
             hasSpecialFood = false;
             new Renderer().start();
+            System.out.println("done setup");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,7 +55,6 @@ public class Client {
 
     public void sendDir(String msg) throws IOException {
         out.println(msg);
-
     }
 
     private void parseData(String data) {
@@ -117,16 +117,22 @@ public class Client {
                 while ((inword = in.readLine()) != null) {
                     if (inword.matches("/(.+)"))
                         number_assigned = Integer.parseInt(inword.split(";")[1]);
-                    if (inword.matches("(.+);(.+)")) {
+                    else if (inword.matches("(.+);(.+)")) {
                         height = Integer.parseInt(inword.split(";")[0]);
                         width = Integer.parseInt(inword.split(";")[1]);
                         gsClient.setVisible(true);
+                    } else if (inword.equals("Game Over!")) {
+                        System.out.println(inword);
+                        in.close();
+                        out.close();
+                        socket.close();
+                        gsClient.setVisible(false);
+                        gsClient.dispose();
+                        return;
                     } else {
                         parseData(inword);
                         gsClient.repaint();
                     }
-
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();
