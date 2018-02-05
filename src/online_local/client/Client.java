@@ -29,6 +29,9 @@ public class Client {
     private int height;
     private int width;
     public boolean hasSpecialFood;
+    public String snake1Score;
+    public String snake2Score;
+
 
     // Render data for anime
     public Pair food;
